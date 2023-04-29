@@ -1,0 +1,28 @@
+<section class="columns has-text-centered story-content">
+  <section class="column is-offset-3 is-6">
+    <h1 class="title"><%= @story.title %></h1>
+    <span class="profile">
+      <%= image_tag @story.user.avatar.variant(resize: '50x50'), class: 'avatar' %>
+      <span class="username"><%= @story.user.username %></span>
+      <a href="#" class="follow-button">Follow</a>
+    </span>
+    <article class="content">
+      <%= image_tag @story.cover_image.variant(resize: '1000x500'), class: 'cover-image' if @story.cover_image.attached?%>
+      <%= simple_format(@story.content) %>
+      <footer>
+        <%= link_to "#", class: 'clapButton is-size-2 has-text-primary' do %>
+          <i class="fa-solid fa-hands-clapping"></i>
+          <span class="clapCount">0</span>
+        <% end %>
+      </footer>
+    </article>
+    <hr>
+    <section class="comments">
+      <h2>留言</h2>
+      <%= render 'comment_area', story: @story, comment: @comment%>
+      <section class="comment-list">
+        <%= render partial: 'comment', collection: @comments  %>
+      </section>
+    </section>
+  </section>
+</section>

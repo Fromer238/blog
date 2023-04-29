@@ -1,0 +1,24 @@
+<% if story.errors.any? %>
+  <div class="notification is-danger">
+    <%= story.errors.full_messages.to_sentence %>
+  </div>
+<% end %>
+
+<%= form_for story do |f| %>
+  <div class="field">
+    <%= image_tag story.cover_image.variant(resize: '1200x1200'), class: 'cover-image' if story.cover_image.attached?%>
+    <%= f.label :cover_image, "封面圖" %><br />
+    <%= f.file_field :cover_image %>
+  </div>
+  <div class="field">
+    <%= f.label :title, "標題" %><br />
+    <%= f.text_field :title, class: 'input' %>
+  </div>
+  <div class="field">
+    <%= f.label :content, "標題" %><br />
+    <%= f.text_area :content, class: 'textarea' %>
+  </div>
+  <%= f.submit '儲存草稿', name: 'save_as_draft', class:'button is-light' %>
+  <%= f.submit '發表文章', name: 'publish' ,class:'button is-primary' if story.may_publish? %>
+  <%= f.submit '文章下架', name: 'unpublish' ,class:'button is-danger' if story.may_unpublish? %>
+<% end %>
